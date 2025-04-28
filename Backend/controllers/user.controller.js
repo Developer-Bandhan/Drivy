@@ -29,7 +29,10 @@ module.exports.registerUser = async (req, res, next) => {
 
     const token = user.generateAuthToken();
 
-    res.status(201).json({ token, user });
+    res.status(201).json({
+        message: "registered successfully!",
+        token, user
+    });
 
 
 }
@@ -59,7 +62,10 @@ module.exports.loginUser = async (req, res, next) => {
 
     res.cookie('token', token);
 
-    res.status(200).json({ token, user });
+    res.status(200).json({
+        message: "Login successfully!",
+        token, user
+    });
 }
 
 module.exports.getUserProfile = async (req, res, next) => {
@@ -70,7 +76,7 @@ module.exports.getUserProfile = async (req, res, next) => {
 
 module.exports.logoutUser = async (req, res, next) => {
     res.clearCookie('token');
-    const token = req.cookies.token || req.headers.authorization.split(' ')[ 1 ];
+    const token = req.cookies.token || req.headers.authorization.split(' ')[1];
 
     await blackListTokenModel.create({ token });
 

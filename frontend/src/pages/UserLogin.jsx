@@ -4,6 +4,7 @@ import { UserDataContext } from '../context/UserContext'
 import drivyImg from '../assets/Drivy-5.png'
 import axios from 'axios'
 import { gsap } from 'gsap'
+import toast from 'react-hot-toast'
 
 const UserLogin = () => {
   const [email, setEmail] = useState('')
@@ -58,9 +59,10 @@ const UserLogin = () => {
           }
         })
       }
+      toast.success(response.data.message);
     } catch (err) {
-      gsap.fromTo('.error-message', { y: -10, opacity: 0 }, { y: 0, opacity: 1, duration: 0.3 })
-      setError(err.response?.data?.message || 'Login failed. Please try again.')
+      // gsap.fromTo('.error-message', { y: -10, opacity: 0 }, { y: 0, opacity: 1, duration: 0.3 })
+      toast.error(err.response?.data?.message || 'Login failed. Please try again.')
     } finally {
       setIsLoading(false)
     }

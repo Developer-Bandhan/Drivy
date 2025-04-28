@@ -14,6 +14,7 @@ import CaptainLogout from './pages/CaptainLogout'
 import Riding from './pages/Riding'
 import CaptainRiding from './pages/CaptainRiding'
 import 'remixicon/fonts/remixicon.css'
+import { Toaster } from 'react-hot-toast'
 
 const App = () => {
 
@@ -51,6 +52,12 @@ const App = () => {
           </CaptainProtectWrapper>
         } />
       </Routes>
+      <Toaster
+        toastOptions={{
+          className: 'text-sm md:text-base px-3 py-2 md:px-4 md:py-3 md:min-w-[300px] md:max-w-[400px]',
+        }}
+      />
+
     </div>
   )
 }

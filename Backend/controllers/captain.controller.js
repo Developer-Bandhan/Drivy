@@ -35,7 +35,10 @@ module.exports.registerCaptain = async (req, res, next) => {
 
     const token = captain.generateAuthToken();
 
-    res.status(201).json({ token, captain });
+    res.status(201).json({
+        message: "registered successfully!",
+        token, captain
+    });
 
 }
 
@@ -63,7 +66,10 @@ module.exports.loginCaptain = async (req, res, next) => {
 
     res.cookie('token', token);
 
-    res.status(200).json({ token, captain });
+    res.status(200).json({
+        message: "Login successfully!",
+        token, captain
+    });
 }
 
 module.exports.getCaptainProfile = async (req, res, next) => {
@@ -71,7 +77,7 @@ module.exports.getCaptainProfile = async (req, res, next) => {
 }
 
 module.exports.logoutCaptain = async (req, res, next) => {
-    const token = req.cookies.token || req.headers.authorization?.split(' ')[ 1 ];
+    const token = req.cookies.token || req.headers.authorization?.split(' ')[1];
 
     await blackListTokenModel.create({ token });
 

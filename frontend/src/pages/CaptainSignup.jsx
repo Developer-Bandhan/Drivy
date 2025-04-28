@@ -4,6 +4,7 @@ import axios from 'axios'
 import { CaptainDataContext } from '../context/CapatainContext'
 import drivyImg from '../assets/Drivy-5.png'
 import { gsap } from 'gsap'
+import toast from 'react-hot-toast'
 
 const CaptainSignup = () => {
   const [email, setEmail] = useState('')
@@ -86,23 +87,26 @@ const CaptainSignup = () => {
         localStorage.setItem('token', data.token)
         navigate('/captain-home')
       }
+      setEmail('') 
+      setFirstName('') 
+      setLastName('') 
+      setPassword('') 
+      setVehicleColor('') 
+      setVehiclePlate('') 
+      setVehicleCapacity('') 
+      setVehicleType('')
+      toast.success(response?.data?.message)
     } catch (err) {
-      gsap.from(formRef.current, {
-        x: [-10, 10, -10, 10, 0],
-        duration: 0.5,
-        ease: "power1.out"
-      })
+      // gsap.from(formRef.current, {
+      //   x: [-10, 10, -10, 10, 0],
+      //   duration: 0.5,
+      //   ease: "power1.out"
+      // })
+      toast.error(err.response?.data?.message || err.response?.data?.errors[0]?.msg);
     }
 
     // Clear input fields
-    setEmail('') 
-    setFirstName('') 
-    setLastName('') 
-    setPassword('') 
-    setVehicleColor('') 
-    setVehiclePlate('') 
-    setVehicleCapacity('') 
-    setVehicleType('')
+   
   }
 
   return (
@@ -211,7 +215,7 @@ const CaptainSignup = () => {
 
           <button
             type="submit"
-            className='bg-black text-white font-bold rounded-xl px-4 py-3 w-full text-lg transition-colors duration-300 shadow-md hover:bg-gray-900'
+            className='bg-yellow-400 hover:bg-yellow-500 text-gray-900 font-bold rounded-xl px-4 py-3 w-full text-lg transition-colors duration-300 shadow-md'
           >
             Create Captain Account
           </button>

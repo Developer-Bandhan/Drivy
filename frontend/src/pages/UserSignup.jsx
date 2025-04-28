@@ -4,6 +4,7 @@ import axios from 'axios'
 import { UserDataContext } from '../context/UserContext'
 import drivyImg from '../assets/Drivy-5.png'
 import { gsap } from 'gsap'
+import toast from 'react-hot-toast'
 
 const UserSignup = () => {
   const [email, setEmail] = useState('')
@@ -91,14 +92,18 @@ const UserSignup = () => {
             navigate('/home')
           }
         })
+
+        toast.success(response.data.message)
       }
     } catch (err) {
-      gsap.from(formRef.current, {
-        x: [-10, 10, -10, 10, 0],
-        duration: 0.5,
-        ease: "power1.out"
-      })
-      setError(err.response?.data?.message || 'Registration failed. Please try again.')
+      // gsap.from(formRef.current, {
+      //   x: [-10, 10, -10, 10, 0],
+      //   duration: 0.8,
+      //   ease: "power1.out"
+      // })
+      console.log(err)
+      toast.error( err.response?.data?.message || err.response?.data?.errors[0]?.msg)
+      
     } finally {
       setIsLoading(false)
     }

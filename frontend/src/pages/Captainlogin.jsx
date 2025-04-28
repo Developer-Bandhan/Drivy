@@ -5,6 +5,7 @@ import axios from 'axios'
 import { CaptainDataContext } from '../context/CapatainContext'
 import drivyImg from '../assets/Drivy-5.png'
 import { gsap } from 'gsap'
+import toast from 'react-hot-toast'
 
 const CaptainLogin = () => {
   const [email, setEmail] = useState('')
@@ -85,7 +86,7 @@ const CaptainLogin = () => {
         setCaptain(data.captain)
         localStorage.setItem('token', data.token)
         
-        // Success animation before navigation
+       
         gsap.to(formRef.current, {
           y: -50,
           opacity: 0,
@@ -93,14 +94,18 @@ const CaptainLogin = () => {
           ease: "power2.in",
           onComplete: () => navigate('/captain-home')
         })
+
+        toast.success(response?.data?.message);
       }
-    } catch (error) {
-      // Error shake animation
-      gsap.from(formRef.current, {
-        x: [-10, 10, -10, 10, 0],
-        duration: 0.5,
-        ease: "power1.out"
-      })
+    } catch (err) {
+      
+      // gsap.from(formRef.current, {
+      //   x: [-10, 10, -10, 10, 0],
+      //   duration: 0.5,
+      //   ease: "power1.out"
+      // })
+      // console.log(err)
+      toast.error(err.response?.data?.message || err.response?.data?.errors[0]?.msg);
     }
 
     setEmail('')
