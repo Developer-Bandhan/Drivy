@@ -13,27 +13,28 @@ import { useContext } from 'react';
 import { UserDataContext } from '../context/UserContext';
 import { useNavigate } from 'react-router-dom';
 import LiveTracking from '../components/LiveTracking';
+import drivyImg from '../assets/Drivy-4.png'
 
 const Home = () => {
-    const [ pickup, setPickup ] = useState('')
-    const [ destination, setDestination ] = useState('')
-    const [ panelOpen, setPanelOpen ] = useState(false)
+    const [pickup, setPickup] = useState('')
+    const [destination, setDestination] = useState('')
+    const [panelOpen, setPanelOpen] = useState(false)
     const vehiclePanelRef = useRef(null)
     const confirmRidePanelRef = useRef(null)
     const vehicleFoundRef = useRef(null)
     const waitingForDriverRef = useRef(null)
     const panelRef = useRef(null)
     const panelCloseRef = useRef(null)
-    const [ vehiclePanel, setVehiclePanel ] = useState(false)
-    const [ confirmRidePanel, setConfirmRidePanel ] = useState(false)
-    const [ vehicleFound, setVehicleFound ] = useState(false)
-    const [ waitingForDriver, setWaitingForDriver ] = useState(false)
-    const [ pickupSuggestions, setPickupSuggestions ] = useState([])
-    const [ destinationSuggestions, setDestinationSuggestions ] = useState([])
-    const [ activeField, setActiveField ] = useState(null)
-    const [ fare, setFare ] = useState({})
-    const [ vehicleType, setVehicleType ] = useState(null)
-    const [ ride, setRide ] = useState(null)
+    const [vehiclePanel, setVehiclePanel] = useState(false)
+    const [confirmRidePanel, setConfirmRidePanel] = useState(false)
+    const [vehicleFound, setVehicleFound] = useState(false)
+    const [waitingForDriver, setWaitingForDriver] = useState(false)
+    const [pickupSuggestions, setPickupSuggestions] = useState([])
+    const [destinationSuggestions, setDestinationSuggestions] = useState([])
+    const [activeField, setActiveField] = useState(null)
+    const [fare, setFare] = useState({})
+    const [vehicleType, setVehicleType] = useState(null)
+    const [ride, setRide] = useState(null)
 
     const navigate = useNavigate()
 
@@ -42,7 +43,7 @@ const Home = () => {
 
     useEffect(() => {
         socket.emit("join", { userType: "user", userId: user._id })
-    }, [ user ])
+    }, [user])
 
     socket.on('ride-confirmed', ride => {
 
@@ -114,7 +115,7 @@ const Home = () => {
                 opacity: 0
             })
         }
-    }, [ panelOpen ])
+    }, [panelOpen])
 
 
     useGSAP(function () {
@@ -127,7 +128,7 @@ const Home = () => {
                 transform: 'translateY(100%)'
             })
         }
-    }, [ vehiclePanel ])
+    }, [vehiclePanel])
 
     useGSAP(function () {
         if (confirmRidePanel) {
@@ -139,7 +140,7 @@ const Home = () => {
                 transform: 'translateY(100%)'
             })
         }
-    }, [ confirmRidePanel ])
+    }, [confirmRidePanel])
 
     useGSAP(function () {
         if (vehicleFound) {
@@ -151,7 +152,7 @@ const Home = () => {
                 transform: 'translateY(100%)'
             })
         }
-    }, [ vehicleFound ])
+    }, [vehicleFound])
 
     useGSAP(function () {
         if (waitingForDriver) {
@@ -163,7 +164,7 @@ const Home = () => {
                 transform: 'translateY(100%)'
             })
         }
-    }, [ waitingForDriver ])
+    }, [waitingForDriver])
 
 
     async function findTrip() {
@@ -199,12 +200,16 @@ const Home = () => {
 
     return (
         <div className='h-screen relative overflow-hidden'>
-            <img className='w-16 absolute left-5 top-5' src="https://upload.wikimedia.org/wikipedia/commons/c/cc/Uber_logo_2018.png" alt="" />
+            <img
+                className='w-16 z-10 absolute left-5 top-5'
+                src={drivyImg}
+                alt="Drivy logo"
+            />
             <div className='h-screen w-screen'>
                 {/* image for temporary use  */}
                 <LiveTracking />
             </div>
-            <div className=' flex flex-col justify-end h-screen absolute top-0 w-full'>
+            <div className=' flex  flex-col justify-end h-screen absolute top-0 w-full'>
                 <div className='h-[30%] p-6 bg-white relative'>
                     <h5 ref={panelCloseRef} onClick={() => {
                         setPanelOpen(false)
@@ -255,7 +260,7 @@ const Home = () => {
                     />
                 </div>
             </div>
-            <div ref={vehiclePanelRef} className='fixed w-full z-10 bottom-0 translate-y-full bg-white px-3 py-10 pt-12'>
+            <div ref={vehiclePanelRef} className='fixed w-full  z-10 bottom-0 translate-y-full bg-white px-3 py-10 pt-12'>
                 <VehiclePanel
                     selectVehicle={setVehicleType}
                     fare={fare} setConfirmRidePanel={setConfirmRidePanel} setVehiclePanel={setVehiclePanel} />
