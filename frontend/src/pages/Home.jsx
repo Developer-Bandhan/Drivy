@@ -46,8 +46,6 @@ const Home = () => {
     }, [user])
 
     socket.on('ride-confirmed', ride => {
-
-
         setVehicleFound(false)
         setWaitingForDriver(true)
         setRide(ride)
@@ -200,20 +198,29 @@ const Home = () => {
 
     return (
         <div className='h-screen relative overflow-hidden'>
-            <img
-                className='w-16 z-10 absolute left-5 top-5'
-                src={drivyImg}
-                alt="Drivy logo"
-            />
+            {/* Logo positioned at top-left with proper styling */}
+            <div className="absolute top-4 left-4 z-[1]">
+                <img
+                    className='w-16 h-auto'
+                    src={drivyImg}
+                    alt="Drivy logo"
+                />
+            </div>
+            
             <div className='h-screen w-screen'>
                 {/* image for temporary use  */}
                 <LiveTracking />
             </div>
-            <div className=' flex  flex-col justify-end h-screen absolute top-0 w-full'>
-                <div className='h-[30%] p-6 bg-white relative'>
-                    <h5 ref={panelCloseRef} onClick={() => {
-                        setPanelOpen(false)
-                    }} className='absolute opacity-0 right-6 top-6 text-2xl'>
+            
+            <div className='flex flex-col justify-end h-screen absolute top-0 w-full'>
+                <div className='h-[30%] p-6 bg-white z-10 relative'>
+                    <h5 
+                        ref={panelCloseRef} 
+                        onClick={() => {
+                            setPanelOpen(false)
+                        }} 
+                        className='absolute opacity-0 right-6 top-6 text-2xl'
+                    >
                         <i className="ri-arrow-down-wide-line"></i>
                     </h5>
                     <h4 className='text-2xl font-semibold'>Find a trip</h4>
@@ -260,11 +267,16 @@ const Home = () => {
                     />
                 </div>
             </div>
-            <div ref={vehiclePanelRef} className='fixed w-full  z-10 bottom-0 translate-y-full bg-white px-3 py-10 pt-12'>
+            
+            <div ref={vehiclePanelRef} className='fixed w-full z-10 bottom-0 translate-y-full bg-white px-3 py-10 pt-12'>
                 <VehiclePanel
                     selectVehicle={setVehicleType}
-                    fare={fare} setConfirmRidePanel={setConfirmRidePanel} setVehiclePanel={setVehiclePanel} />
+                    fare={fare} 
+                    setConfirmRidePanel={setConfirmRidePanel} 
+                    setVehiclePanel={setVehiclePanel} 
+                />
             </div>
+            
             <div ref={confirmRidePanelRef} className='fixed w-full z-10 bottom-0 translate-y-full bg-white px-3 py-6 pt-12'>
                 <ConfirmRide
                     createRide={createRide}
@@ -272,9 +284,11 @@ const Home = () => {
                     destination={destination}
                     fare={fare}
                     vehicleType={vehicleType}
-
-                    setConfirmRidePanel={setConfirmRidePanel} setVehicleFound={setVehicleFound} />
+                    setConfirmRidePanel={setConfirmRidePanel} 
+                    setVehicleFound={setVehicleFound} 
+                />
             </div>
+            
             <div ref={vehicleFoundRef} className='fixed w-full z-10 bottom-0 translate-y-full bg-white px-3 py-6 pt-12'>
                 <LookingForDriver
                     createRide={createRide}
@@ -282,14 +296,17 @@ const Home = () => {
                     destination={destination}
                     fare={fare}
                     vehicleType={vehicleType}
-                    setVehicleFound={setVehicleFound} />
+                    setVehicleFound={setVehicleFound} 
+                />
             </div>
-            <div ref={waitingForDriverRef} className='fixed w-full  z-10 bottom-0  bg-white px-3 py-6 pt-12'>
+            
+            <div ref={waitingForDriverRef} className='fixed w-full z-10 bottom-0 bg-white px-3 py-6 pt-12'>
                 <WaitingForDriver
                     ride={ride}
                     setVehicleFound={setVehicleFound}
                     setWaitingForDriver={setWaitingForDriver}
-                    waitingForDriver={waitingForDriver} />
+                    waitingForDriver={waitingForDriver} 
+                />
             </div>
         </div>
     )
